@@ -1,0 +1,11 @@
+ctrl-shift-p: opens the command palette
+
+@sort:installs category:languages 
+
+@recommended:keymaps 
+
+Extensions to install
+Auto Close Tag - Jun Han
+
+vscode-icons - Roberto Huertas
+Open in Browser - TechER
