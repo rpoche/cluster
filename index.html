@@ -129,6 +129,7 @@ var ShadedRelief = L.esri.basemapLayer("ShadedRelief") , streets   = L.esri.base
     //,"LLT Properties Alt": L.esri.dynamicMapLayer({  url: url02,  opacity : 0.75,  useCors: false	}) 
     //,"LLT Properties 03": L.esri.dynamicMapLayer({  url: url03, layers: [1],  opacity : 0.50,  useCors: false})   ///.bindPopup(function (layer){return L.Util.template('{Joinfield}',layer.feature.properties)}) 
     ,"Precincts": L.esri.featureLayer({url: FS01+'/1'})
+    ,"Orleans Precincts": L.esri.featureLayer({url: FS01+'/1',where: "parish = '36'"})
     ,"Orleans Council": L.esri.featureLayer({url: FS01+'/2'})
     ,"Jefferson Council": L.esri.featureLayer({url: FS01+'/3'})
     ,"Orleans Wards": L.esri.featureLayer({url: FS01+'/4'})
