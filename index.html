@@ -54,6 +54,8 @@
 <!-- Load Clustered Feature Layer from CDN -->
 <script src="https://unpkg.com/esri-leaflet-cluster@2.0.0"></script>
 
+<!-- Load Esri Leaflet Renderers -->
+<script src="https://unpkg.com/esri-leaflet-renderers@2.0.6"></script>
 
 
   <!-- load the latest release from the cdn automatically -->
@@ -119,15 +121,29 @@ var ShadedRelief = L.esri.basemapLayer("ShadedRelief") , streets   = L.esri.base
   var url02 = "https://lucitymobile.sbpg.net/arcgis/rest/services/LLT/AvailableLLTProperties/MapServer";
   var url03 = "https://lucitymobile.sbpg.net/arcgis/rest/services/ComDev/ZoningCouncilFlood_WebMap/MapServer";
   var url04 = "https://lucitymobile.sbpg.net/arcgis/rest/services/LLT/AvailableLLTProperties/FeatureServer/0";
-
+  var FS01 = "https://services8.arcgis.com/9KtGDFxstKE19KUm/ArcGIS/rest/services/Areas/FeatureServer";
 
   var overlays = {
 		"Sample Points": cities
-    ,"LLT Properties": L.esri.dynamicMapLayer({  url: url01,  opacity : 0.25,  useCors: false	}) 
-    ,"LLT Properties Alt": L.esri.dynamicMapLayer({  url: url02,  opacity : 0.75,  useCors: false	}) 
-    //,"LLT Properties 03": L.esri.dynamicMapLayer({  url: url03, layers: [1],  opacity : 0.50,  useCors: false}) 
-    ,"Council Districts": L.esri.dynamicMapLayer({  url: url03, layers: [1],  opacity : 0.50,  useCors: false}) 
-    ,"Point Cluster Testing": L.esri.Cluster.featureLayer({url: url04})
+    //,"LLT Properties": L.esri.dynamicMapLayer({  url: url01,  opacity : 0.25,  useCors: false	}) 
+    //,"LLT Properties Alt": L.esri.dynamicMapLayer({  url: url02,  opacity : 0.75,  useCors: false	}) 
+    //,"LLT Properties 03": L.esri.dynamicMapLayer({  url: url03, layers: [1],  opacity : 0.50,  useCors: false})   ///.bindPopup(function (layer){return L.Util.template('{Joinfield}',layer.feature.properties)}) 
+    ,"Precincts": L.esri.featureLayer({url: FS01+'/1'})
+    ,"Orleans Council": L.esri.featureLayer({url: FS01+'/2'})
+    ,"Jefferson Council": L.esri.featureLayer({url: FS01+'/3'})
+    ,"Orleans Wards": L.esri.featureLayer({url: FS01+'/4'})
+    ,"Orleans Neighborhoods": L.esri.featureLayer({url: FS01+'/5'})
+    ,"Orleans Assessment Dist": L.esri.featureLayer({url: FS01+'/6'})
+    ,"Orleans Planning Districts": L.esri.featureLayer({url: FS01+'/7'})
+    ,"Orleans Cultural Areas": L.esri.featureLayer({url: FS01+'/8'})
+    ,"Louisiana": L.esri.featureLayer({url: FS01+'/9'})
+    ,"Parishes": L.esri.featureLayer({url: FS01+'/10'})
+    ,"Congressional": L.esri.featureLayer({url: FS01+'/11'})
+    ,"State Senate": L.esri.featureLayer({url: FS01+'/12'}) 
+    ,"State House": L.esri.featureLayer({url: FS01+'/13'})
+    ,"ZIP Codes": L.esri.featureLayer({url: FS01+'/14'})
+     ,"Point Cluster Testing": L.esri.Cluster.featureLayer({url: url04})
+
   };
 
 
