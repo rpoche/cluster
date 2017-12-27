@@ -23,6 +23,8 @@
     integrity="sha512-ECQqaYZke9cSdqlFG08zSkudgrdF6I1d8ViSa7I3VIszJyVqw4ng1G8sehEXlumdMnFYfzY0tMgdQa4WCs9IUw=="
     crossorigin=""></script>
 
+    <link rel="stylesheet" href="https://cdn.rawgit.com/Leaflet/Leaflet.label/0.8/dist/leaflet.label.css" />
+    <script src="https://cdn.rawgit.com/Leaflet/Leaflet.label/0.8/dist/leaflet.label.js"></script>
 
   <style>
     body { margin:0; padding:0; }
@@ -60,7 +62,8 @@
 
   <!-- load the latest release from the cdn automatically -->
 <script src="https://unpkg.com/esri-leaflet-vector"></script>
-
+<script src="https://unpkg.com/rbush@2.0.1/rbush.min.js"></script>
+<script src="https://unpkg.com/labelgun@6.0.0/lib/labelgun.min.js"></script>
 <div id="map"></div>
 
 <!-- <div id="basemaps-wrapper" class="leaflet-bar">
@@ -128,11 +131,11 @@ var ShadedRelief = L.esri.basemapLayer("ShadedRelief") , streets   = L.esri.base
     //,"LLT Properties": L.esri.dynamicMapLayer({  url: url01,  opacity : 0.25,  useCors: false	}) 
     //,"LLT Properties Alt": L.esri.dynamicMapLayer({  url: url02,  opacity : 0.75,  useCors: false	}) 
     //,"LLT Properties 03": L.esri.dynamicMapLayer({  url: url03, layers: [1],  opacity : 0.50,  useCors: false})   ///.bindPopup(function (layer){return L.Util.template('{Joinfield}',layer.feature.properties)}) 
-    ,"Precincts": L.esri.featureLayer({url: FS01+'/1'})
-    ,"Orleans Precincts": L.esri.featureLayer({url: FS01+'/1',where: "parish = '36'"})
-    ,"Orleans Council": L.esri.featureLayer({url: FS01+'/2'})
-    ,"Jefferson Council": L.esri.featureLayer({url: FS01+'/3'})
-    ,"Orleans Wards": L.esri.featureLayer({url: FS01+'/4'})
+    ,"Precincts": L.esri.featureLayer({url: FS01+'/1',renderer: L.canvas()})
+    ,"Orleans Precincts": L.esri.featureLayer({url: FS01+'/1',where: "parish = '36'"})//.bindLabel ('My Label')
+    ,"Orleans Council": L.esri.featureLayer({url: FS01+'/2'}).bindPopup(('featureLayer.properties.Area'))//.featureLayer.eachFeature(function(layer){console.log(layer.feature.properties.Area1)
+    ,"Jefferson Council": L.esri.featureLayer({url: FS01+'/3'})//.bindPopup(feature.properties.Area)
+    ,"Orleans Wards": L.esri.featureLayer({url: FS01+'/4'})//.bindPopup('<b>Status:</b>'+feature.properties.Area+'<br >')
     ,"Orleans Neighborhoods": L.esri.featureLayer({url: FS01+'/5'})
     ,"Orleans Assessment Dist": L.esri.featureLayer({url: FS01+'/6'})
     ,"Orleans Planning Districts": L.esri.featureLayer({url: FS01+'/7'})

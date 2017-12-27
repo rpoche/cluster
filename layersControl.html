@@ -1,0 +1,70 @@
+<html>
+<head>
+
+  <meta charset=utf-8 />
+  <title>Esri Leaflet Testing Layer Controls</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <!-- Load Leaflet from CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+    integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+    integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+    crossorigin=""></script>
+
+
+    <!-- Load Esri Leaflet from CDN -->
+    <script src="https://unpkg.com/esri-leaflet@2.1.1/dist/esri-leaflet.js"
+    integrity="sha512-ECQqaYZke9cSdqlFG08zSkudgrdF6I1d8ViSa7I3VIszJyVqw4ng1G8sehEXlumdMnFYfzY0tMgdQa4WCs9IUw=="
+    crossorigin=""></script>
+
+  <div id="map"></div>
+  <style>
+    body { margin:0; padding:0; }
+    #map { position: absolute; top:0; bottom:0; right:0; left:0; }
+  </style>
+</head>
+
+<body>
+
+<script>
+var map = L.map('map',{center:[30, -90], zoom: 12, Layers: [ShadedRelief, overlays]});
+ 
+
+L.esri.tiledMapLayer({url: 'https://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer', maxZoom: 15}).addTo(map);
+
+var ShadedRelief = L.esri.basemapLayer("ShadedRelief") , streets   = L.esri.basemapLayer('Streets'), Imagery = L.esri.basemapLayer ('Imagery');
+
+	var baseLayers = {
+		"ShadedRelief": ShadedRelief
+		,"Streets": streets
+    ,"Imagery": Imagery
+	};
+
+  var FS01 = "https://services8.arcgis.com/9KtGDFxstKE19KUm/ArcGIS/rest/services/Areas/FeatureServer"; // this is the arcgis online service for the area layers
+
+  var overlays = {
+    "Precincts": L.esri.featureLayer({url: FS01+'/1',renderer: L.canvas()})
+    ,"Orleans Precincts": L.esri.featureLayer({url: FS01+'/1',where: "parish = '36'"})
+    ,"Orleans Council": L.esri.featureLayer({url: FS01+'/2'}).bindPopup(('featureLayer.properties.Area'))
+    ,"Jefferson Council": L.esri.featureLayer({url: FS01+'/3'})
+    ,"Orleans Wards": L.esri.featureLayer({url: FS01+'/4'})
+    ,"Orleans Neighborhoods": L.esri.featureLayer({url: FS01+'/5'})
+    ,"Orleans Assessment Dist": L.esri.featureLayer({url: FS01+'/6'})
+    ,"Orleans Planning Districts": L.esri.featureLayer({url: FS01+'/7'})
+    ,"Orleans Cultural Areas": L.esri.featureLayer({url: FS01+'/8'})
+    ,"Louisiana": L.esri.featureLayer({url: FS01+'/9'})
+    ,"Parishes": L.esri.featureLayer({url: FS01+'/10'})
+    ,"Congressional": L.esri.featureLayer({url: FS01+'/11'})
+    ,"State Senate": L.esri.featureLayer({url: FS01+'/12'}) 
+    ,"State House": L.esri.featureLayer({url: FS01+'/13'})
+    ,"ZIP Codes": L.esri.featureLayer({url: FS01+'/14'})
+    //add overlay for cluster points here...
+  };
+
+	L.control.layers(baseLayers, overlays).addTo(map);
+</script>
+
+</body>
+</html>
