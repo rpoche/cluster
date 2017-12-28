@@ -34,7 +34,7 @@
         });
         
          fcounty.bindPopup(function (evt) {
-            return L.Util.template('<b> Precinct: </b>  {WARD}  "-"  {PRECINCT}',evt.feature.properties);
+            return L.Util.template('<b> Precinct: </b>  {WARD}    {PRECINCT}',evt.feature.properties);
         });	
     //END MapService as a Feature Layer
         
