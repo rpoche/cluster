@@ -67,8 +67,8 @@ OPrecincts = L.esri.featureLayer({
     precision: 5,
     style: function (feature) {
         return { 
-        color: 'blue', 
-        fillColor: 'green',
+        color: 'green', 
+        fillColor: 'blue',
         weight: 2 };
     }
 });
@@ -85,7 +85,10 @@ OCouncil = L.esri.featureLayer({
     precision: 5,
     style: function (feature) {
         return { 
-        weight: 2 };
+        color: '#d1f442', 
+        fillColor: 'white', 
+        opacity : 0.75,
+        weight: 3 };
     }
 });
 
@@ -100,6 +103,9 @@ JCouncil = L.esri.featureLayer({
     precision: 5,
     style: function (feature) {
         return { 
+        color: '#097c09', 
+        fillColor: 'gray', 
+        opacity : 0.75,
         weight: 2 };
     }
 });
@@ -115,6 +121,9 @@ OWards = L.esri.featureLayer({
     precision: 5,
     style: function (feature) {
         return { 
+        color: '#820619', 
+        fillColor: 'gray', 
+        opacity : 0.75,
         weight: 2 };
     }
 });
@@ -130,6 +139,9 @@ ONeighborhoods = L.esri.featureLayer({
     precision: 5,
     style: function (feature) {
         return { 
+        color: '#4c6399', 
+        fillColor: 'white', 
+        opacity : 0.75,   
         weight: 2 };
     }
 });
@@ -145,6 +157,9 @@ OAssessDist = L.esri.featureLayer({
     precision: 5,
     style: function (feature) {
         return { 
+        color: '#4c6399', 
+        fillColor: 'white', 
+        opacity : 0.75,   
         weight: 2 };
     }
 });
@@ -160,6 +175,9 @@ OPlanDist = L.esri.featureLayer({
     precision: 5,
     style: function (feature) {
         return { 
+        color: '#1a92d8', 
+        fillColor: 'green', 
+        opacity : 0.75,   
         weight: 2 };
     }
 });
@@ -175,6 +193,9 @@ OCulAreas = L.esri.featureLayer({
     precision: 5,
     style: function (feature) {
         return { 
+            color: '#108961', 
+        fillColor: 'white', 
+        opacity : 0.75,   
         weight: 2 };
     }
 });
@@ -190,6 +211,9 @@ Par = L.esri.featureLayer({
     precision: 5,
     style: function (feature) {
         return { 
+            color: 'black', 
+        //fillColor: 'white', 
+        opacity : 0.75,         
         weight: 2 };
     }
 });
@@ -205,7 +229,10 @@ Cong = L.esri.featureLayer({
     precision: 5,
     style: function (feature) {
         return { 
-        weight: 2 };
+        color: '#b78e07', 
+        fillColor: 'white', 
+        opacity : 0.75,   
+        weight: 5 };
     }
 });
 
@@ -220,7 +247,10 @@ StateSen = L.esri.featureLayer({
     precision: 5,
     style: function (feature) {
         return { 
-        weight: 2 };
+        color: '#3e7a64', 
+        fillColor: 'white', 
+        opacity : 0.75,   
+        weight: 4 };
     }
 });
 
@@ -235,7 +265,10 @@ StateHouse = L.esri.featureLayer({
     precision: 5,
     style: function (feature) {
         return { 
-        weight: 2 };
+        color: '#e04306', 
+        fillColor: 'white', 
+        opacity : 0.75, 
+        weight: 4 };
     }
 });
 
@@ -250,6 +283,10 @@ ZIP = L.esri.featureLayer({
     precision: 5,
     style: function (feature) {
         return { 
+        color: //'#7c13c6', 
+        'rgb(124, 19, 198)',
+        fillColor: 'white', 
+        opacity : 0.75,     
         weight: 2 };
     }
 });
