@@ -1,0 +1,54 @@
+
+<html>
+    <head><title>Test</title>
+        
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"></script>
+    <script src="https://unpkg.com/esri-leaflet@2.0.3"></script>
+    
+    </head>
+    <style>
+    #map        { width: 75%; height: 95%; float: left; }
+    </style>
+    <body>
+    <div id="map"></div>
+    <script>
+    
+    var map = L.map('map').setView([30, -90], 15);
+    var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png',{ 
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+      
+    //MapService as a Feature Layer //Symbology comes from ArcServer Service or defined here.
+        fcounty = L.esri.featureLayer({
+            url: 'https://services8.arcgis.com/9KtGDFxstKE19KUm/ArcGIS/rest/services/Areas/FeatureServer/1',
+            simplifyFactor: 0.5,
+            precision: 5,
+            style: function (feature) {
+                return { 
+                color: 'blue', 
+                fillColor: 'green',
+                weight: 2 };
+            }
+        });
+        
+         fcounty.bindPopup(function (evt) {
+            return L.Util.template('<b> Precinct: </b>  {WARD}  "-"  {PRECINCT}',evt.feature.properties);
+        });	
+    //END MapService as a Feature Layer
+        
+            
+        var baseMaps = {
+            "OSM B&W":osm
+        };
+    
+        var overlayMaps ={
+            "Feature":fcounty
+        };
+    //Add layer control
+        layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+     
+    </script>
+    </body>
+    </html>
