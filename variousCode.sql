@@ -432,6 +432,17 @@ geometry::STGeomFromText
 
 select * 
   
+--Switching from Geometry to Geography  
+  SELECT geography::STGeomFromText(SHAPE.ToString(),4326) FROM featureclass;
+
+--delete duplicates
+delete C from (
+Select  *,
+        ROW_NUMBER() over (Partition by [OBJECTID_1] order by [OBJECTID_1]) as rowNumber
+From    [CENTERLINETESTING]  ) as C
+Where   rowNumber > 1
+  
+  
 --Zoneupdates
 DELETE
 [Private.Data].SettlementZones
