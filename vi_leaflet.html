@@ -34,7 +34,7 @@ var map = L.map('map',{center:[18.342966, -64.817346], zoom: 12, Layers: [Shaded
 
 L.esri.tiledMapLayer({url: 'https://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer', maxZoom: 15}).addTo(map);
 
-var ShadedRelief = L.esri.basemapLayer("ShadedRelief") , streets   = L.esri.basemapLayer('Streets'), Imagery = L.esri.basemapLayer ('Imagery');
+var ShadedRelief = L.esri.basemapLayer("Streets") , streets   = L.esri.basemapLayer('Streets'), Imagery = L.esri.basemapLayer ('Imagery');
 
 	var baseLayers = {
 		"ShadedRelief": ShadedRelief
