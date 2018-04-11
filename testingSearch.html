@@ -112,7 +112,7 @@ Points.bindTooltip(function (evt) {
 
 
 PointsPublic.bindTooltip(function (evt) {
-    return L.Util.template('<p> <b> Applicant: </b> {EHRVI_ID} <p> Address: {DamageAddress}',evt.feature.properties);
+    return L.Util.template('<b> Applicant: </b> {EHRVI_ID} ',evt.feature.properties);
 }); 
 
   var FS02 = "https://services8.arcgis.com/kp8l5vAnPTGejwfd/arcgis/rest/services/EHRVI_Public/FeatureServer";
@@ -128,7 +128,7 @@ ExactPoints = L.esri.featureLayer({
 
 
 ExactPoints.bindPopup(function (evt) {
-  return L.Util.template('<a target="_blank" href = "http://maps.google.com/maps?t=h&q=loc:{Lat},{Long}"> <b> Applicant ID: </b> {EHRVI_ID}  </a> <p> Address: {DamageAddress}',evt.feature.properties);
+  return L.Util.template('<a target="_blank" href = "http://maps.google.com/maps?t=h&q=loc:{Lat},{Long}"> <b> Applicant ID: </b> {EHRVI_ID} </a> <p> {DamageAddress}',evt.feature.properties);
 }); 
 
   var overlays = {

@@ -18,13 +18,15 @@
     integrity="sha512-pijLQd2FbV/7+Jwa86Mk3ACxnasfIMzJRrIlVQsuPKPCfUBCDMDUoLiBQRg7dAQY6D1rkmCcR8286hVTn/wlIg=="
     crossorigin=""></script>
 
+    
   <!-- Load Esri Leaflet Geocoder from CDN -->
-    <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.8/dist/esri-leaflet-geocoder.css"
-    integrity="sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ=="
-    crossorigin="">
-  <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.8/dist/esri-leaflet-geocoder.js"
-    integrity="sha512-/jzi62LjYIRhJ4Iv3gE5Trzdz0YrpLVDS5514JDeijbMd9P8uZqad4+4RlyYtpcebB/jnhLUfB0B6dOgMh21gg=="
-    crossorigin=""></script>
+  <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.8/dist/esri-leaflet-geocoder.css"
+  integrity="sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ=="
+  crossorigin="">
+<script src="https://unpkg.com/esri-leaflet-geocoder@2.2.8/dist/esri-leaflet-geocoder-debug.js"
+  integrity="sha512-/jzi62LjYIRhJ4Iv3gE5Trzdz0YrpLVDS5514JDeijbMd9P8uZqad4+4RlyYtpcebB/jnhLUfB0B6dOgMh21gg=="
+  crossorigin=""></script>
+
 
 <!-- Include Leaflet.heat via rawgit.com
 in production you'd be better off hosting this library yourself -->
@@ -112,7 +114,7 @@ Points.bindTooltip(function (evt) {
 
 
 PointsPublic.bindTooltip(function (evt) {
-    return L.Util.template('<p> <b> Applicant: </b> {EHRVI_ID} <p> Address: {DamageAddress}',evt.feature.properties);
+    return L.Util.template('<b> Applicant: </b> {EHRVI_ID} ',evt.feature.properties);
 }); 
 
   var FS02 = "https://services8.arcgis.com/kp8l5vAnPTGejwfd/arcgis/rest/services/EHRVI_Public/FeatureServer";
@@ -128,7 +130,7 @@ ExactPoints = L.esri.featureLayer({
 
 
 ExactPoints.bindPopup(function (evt) {
-  return L.Util.template('<a target="_blank" href = "http://maps.google.com/maps?t=h&q=loc:{Lat},{Long}"> <b> Applicant ID: </b> {EHRVI_ID}  </a> <p> Address: {DamageAddress}',evt.feature.properties);
+  return L.Util.template('<a target="_blank" href = "http://maps.google.com/maps?t=h&q=loc:{Lat},{Long}"> <b> Applicant ID: </b> {EHRVI_ID} </a>',evt.feature.properties);
 }); 
 
   var overlays = {
@@ -142,22 +144,7 @@ ExactPoints.bindPopup(function (evt) {
 	L.control.layers(baseLayers, overlays).addTo(map);
 
 
-var searchControl = L.esri.Geocoding.geosearch({
-  providers: [
-    L.esri.Geocoding.featureLayerProvider({
-      url: FS02 + '/0/',
-      searchFields: ['EHRVI_ID','DamageAddress'],
-      label: 'VI Applicants',
-      bufferRadius: 75,
-      formatSuggestion: function(feature){
-        return feature.properties.EHRVI_ID +  ' - ' + feature.properties.DamageAddress ;
-      }
-    })
-  ]
-}).addTo(map);
-
-
-var results = L.layerGroup().addTo(map);
+  var searchControl = L.esri.Geocoding.geosearch().addTo(map);
 
 searchControl.on('results', function(data){
   results.clearLayers();
@@ -165,6 +152,8 @@ searchControl.on('results', function(data){
     results.addLayer(L.marker(data.results[i].latlng));
   }
 });
+
+
 
 </script>
 
