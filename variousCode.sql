@@ -312,8 +312,16 @@ WITH (BOUNDING_BOX = (' + @MinX + ', ' + @MinY + ', ' + @MaxX + ', ' + @MaxY + '
  
 exec sp_executesql @strSQL
  
+--EHRVI
+="update [gis].[tbl_FEMAReport] set Lat2 = " &[@Lat]&" Where EHRVI_ID = "&[@[Application '#]]
+="update [gis].[tbl_FEMAReport] set Lon2 = '" &[@[ Long]]&"' Where EHRVI_ID = "&[@[Application '#]]
+="update [gis].[tbl_FEMAReport] set [Locator] = '" &[@LatLongAccuracy]&"' Where EHRVI_ID = "&[@[Application '#]]
+="update [gis].[tbl_FEMAReport] set Lat2 = " &C2&" Where EHRVI_ID = "&A2
+="update [gis].[tbl_FEMAReport] set Lon2 = '" &D2&"' Where EHRVI_ID = "&A2
+="update [gis].[tbl_FEMAReport] set [Locator] = '" &E2&"' Where EHRVI_ID = "&A2
 
- 
+
+
 --CREATE A SPATIAL INDEX ON POINT SHAPE COLUMN
 if exists (select name from sysindexes where name = 'sidx_gnis_ptsintrest')
        begin

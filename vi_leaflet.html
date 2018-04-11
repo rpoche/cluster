@@ -50,9 +50,13 @@ var Topographic = L.esri.basemapLayer("Topographic") , streets   = L.esri.basema
     ,"Imagery": Imagery
 	};
 
+//     var FS04 = "https://services8.arcgis.com/kp8l5vAnPTGejwfd/arcgis/rest/services/EHRVI_Public/FeatureServer/0";
+//  cluster = L.esri.Cluster.featureLayer({
+//   url: FS04
+//  });
+
+
    var FS03 = "https://services8.arcgis.com/kp8l5vAnPTGejwfd/arcgis/rest/services/EHRVI_Public/FeatureServer/0";
-
-
    heat = L.esri.Heat.featureLayer({
     url: FS03,
     radius: 30
@@ -105,16 +109,13 @@ PointsPublic.bindTooltip(function (evt) {
 }); 
 
   var FS02 = "https://services8.arcgis.com/kp8l5vAnPTGejwfd/arcgis/rest/services/EHRVI_Public/FeatureServer";
-
+//https://rpoche.github.io/cluster/vi_leaflet.html
 ExactPoints = L.esri.featureLayer({
-  url:  FS02 +'/0',where: "locator = 'Rooftop'",
-  simplifyFactor: 0.5,
-  precision: 5,
+  url:  FS02 +'/0',where: "Locator = 'Rooftop'",
   style: function (feature) {
       return { 
       color: 'red', 
-      fillColor: 'green',
-      weight: 2 };
+      fillColor: 'red' };
   }
 });
 
@@ -126,6 +127,7 @@ ExactPoints.bindTooltip(function (evt) {
   var overlays = {
     "Points Secure": Points
     ,"Points Public": PointsPublic
+   // ,"Point Cluster": cluster
     ,"Exact Locations":ExactPoints
     ,"Point Heat Map": heat
   };
