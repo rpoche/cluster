@@ -46,6 +46,19 @@ ORDER BY execquery.last_execution_time DESC
 
 ===============
 
+------======================------ Update All tables in a db
+EXEC sp_MSforeachtable '
+    begin
+        ALTER TABLE ? ADD d_acres float ;
+    end
+'
+
+EXEC sp_MSforeachtable '
+    begin
+        update ? set d_acres = shape.STArea ()/43560 ;
+    end
+'
+
 ------Find tables in a view 
 SELECT *
 FROM INFORMATION_SCHEMA.VIEWS
