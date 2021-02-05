@@ -45,7 +45,6 @@ ORDER BY execquery.last_execution_time DESC
 =================================
 
 ===============
-
 ------======================------ Update All tables in a db
 EXEC sp_MSforeachtable '
     begin
@@ -58,6 +57,7 @@ EXEC sp_MSforeachtable '
         update ? set d_acres = shape.STArea ()/43560 ;
     end
 '
+
 
 ------Find tables in a view 
 SELECT *
@@ -206,7 +206,8 @@ FROM
 
 
 --just show replaced records in database
-SELECT REPLACE(ParishName, 'LAFOURCHE', 'LAFJDSKFJSDF') AS Parish_Name, ParishName
+SELECT 
+(ParishName, 'LAFOURCHE', 'LAFJDSKFJSDF') AS Parish_Name, ParishName
 FROM vwCurrent_Polling_Places_test
 
 --copy a table
@@ -638,6 +639,42 @@ ALTER DATABASE [excelTest]
 SET RECOVERY FULL;
 GO
 
+
+--------------Doyle Shrink File -----------------
+
+---shrink files...
+USE [Testing];
+GO
+-- Truncate the log by changing the database recovery model to SIMPLE.
+ALTER DATABASE [Testing]
+SET RECOVERY SIMPLE;
+GO
+-- Shrink the truncated log file to 1 MB.
+DBCC SHRINKFILE (Testing_Log, 1);
+GO
+-- Reset the database recovery model.
+ALTER DATABASE [Testing]
+SET RECOVERY FULL;
+GO
+
+
+---shrink files...
+USE [excelTest];
+GO
+-- Truncate the log by changing the database recovery model to SIMPLE.
+ALTER DATABASE [excelTest]
+SET RECOVERY SIMPLE;
+GO
+-- Shrink the truncated log file to 1 MB.
+DBCC SHRINKFILE ([excelTest]
+_Log, 1);
+GO
+-- Reset the database recovery model.
+ALTER DATABASE [excelTest]
+SET RECOVERY FULL;
+GO
+
+
 -- get envelope
 SELECT geometry::EnvelopeAggregate(Shape).STPointN(1).STX AS MinX,
     geometry::EnvelopeAggregate(Shape).STPointN(1).STY AS MinY,
@@ -823,30 +860,25 @@ C:
 SELECT * FROM OPENROWSET('Microsoft.ACE.OLEDB.12.0', 'Excel 12.0;Database=
 C:
 \Users\file name.xslx,[Sheet1$])
-
 --dbf files fox pro, not working because of driver not 64bit
 select *
 from
     openrowset('VFPOLEDB','C:\GIS\data\national\census\LA\STF3A1990\stf301la.dbf';'';
     '','SELECT * FROM stf301la')
-
 CREATE TABLE [dbo].[g20115la]
 (
     [Column 0] varchar(1270)
 )
-
 Format=TabDelimited
 Format=Fixed
 C:
 \Users\rpoche\Downloads\zbp11detail
-
 --Insert data quick from Excel
 CREATE TABLE [dbo].[BPTable1]
 (
     [ID] [int] NULL,
     [Company] [varchar](150) NULL,
     [Address] [varchar](150) NULL
-
     INSERT INTO [BPTable1]
         (types,color,size)
     VALUES
@@ -921,7 +953,10 @@ BULK INSERT g20115la3
 for XML Path ('')),1,1,'') as GCRIDMulti
 from [dbo].[GCRRustTranslationTable] CAT
 
+---- combine values
+    ,string_agg (g.gislink ,',') as gislink_parcel
 
+    ---or ---- Stuff
 	 select convert (varchar (30), Ref_ID) as ID
 , stuff ((select ',' + convert (varchar (15),  PermitTypes) as [text()] from [test02].[dbo].[MPN_CODEENF_FINAL] tr  where CAT.Ref_ID = TR.Ref_ID 
 for XML Path ('')),1,1,'') as GCRIDMulti
@@ -929,22 +964,21 @@ from [test02].[dbo].[MPN_CODEENF_FINAL] CAT
    where Ref_ID in (  16304,21491,23294,27297,13060,23748,16771,20008,22093,7979,15616,15693,11347,11397,9567)
 order by Ref_ID
 
+--measure of compactness
+4*pi() * (a5.Shape.STArea() / power (convert (float, a5.Shape.STLength ( )),2) )  as shapescore
+
+
 -------Add unique ID to view
 SELECT convert (int, Row_number() OVER(ORDER BY [CRASH_NUM] ASC)) AS 'RowNumber', * from  (SELECT   * from table) X
 
 http://msdn.microsoft.com/en-us/library/ms974559.aspx
 http://www.connectionstrings.com/ace-oledb-12-0/
 Server machine 'NJDCA1UATAPP09.FEDCLOUD.CGIPDC.CGINET' is currently being configured by another administrative operation. Please try again later.' 
-
 4*pi() * (Shape.STArea() / power (convert (float, Shape.STLength ( )),2) ) between 0.48 and 1.0    --Measure of compactness
-
-
 ---ExcelStuff
 ="create table SignID (" &A3&" int NOT NULL, "&B3&" varchar(16) NULL, " &C3 &" varchar(32) NULL)" --For Creating tables
 ="Insert into SignCondition values ("&A5&",'"&B5&"',"&"'"&C5&"')"
     --For Inserting Values
-
-
     -- RUN AFTER STANDARDIZATION
     UPDATE
         [Elections].[import].[SOS_Voter_Registration_PreProcessed]
@@ -954,7 +988,6 @@ SET
         [ZP4_RStreetName] = LTRIM(RTRIM([ZP4_RStreetName])),
         [ZP4_RStreetPostDirection] = LTRIM(RTRIM([ZP4_RStreetPostDirection])),
         [ZP4_RStreetSuffix] = LTRIM(RTRIM([ZP4_RStreetSuffix]))
-
     UPDATE
         [Elections].[import].[SOS_Voter_Registration_PreProcessed]
 SET
@@ -977,8 +1010,6 @@ Standard Deviation
         )
     select stDev (num)
     from data
-
-
     -------------------------------
     -------------------------------
     -------------------------------
@@ -1119,4 +1150,3 @@ https://docs.microsoft.com/en-us/sql/relational-databases/spatial/query-spatial-
 https://tereshenkov.wordpress.com/
 https://tereshenkov.wordpress.com/2015/02/05/sql-server-spatial-functions-for-gis-users/
 https://tereshenkov.wordpress.com/2018/02/17/sql-server-spatial-functions-for-gis-users-part-2/
-
