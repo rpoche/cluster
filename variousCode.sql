@@ -122,6 +122,12 @@ select *
 from information_schema.columns
 where column_name like '%EmpId%'
 
+-- using with to make queries easier
+  with size as (select [nom_ent], fips, max (shape.STArea()) as maxarea  FROM [Working].[dbo].[DOYLE_MX_STATE] group by [nom_ent], fips)
+  select * from [Working].[dbo].[DOYLE_MX_STATE] d 
+  join size s 
+  on s.maxarea = shape.STArea()
+  order by d.fips
 
 -- Query List tables ***** Works well but no sizes
 SELECT *
@@ -1150,3 +1156,20 @@ https://docs.microsoft.com/en-us/sql/relational-databases/spatial/query-spatial-
 https://tereshenkov.wordpress.com/
 https://tereshenkov.wordpress.com/2015/02/05/sql-server-spatial-functions-for-gis-users/
 https://tereshenkov.wordpress.com/2018/02/17/sql-server-spatial-functions-for-gis-users-part-2/
+
+
+--update based on group by 
+ update p  set p.assessorparcelnumber = grouped.Par
+from MH_PROJECTS652_PARCELS p
+join (  
+select string_agg (PARCEL_ID,',') as par , gislink
+ from [dbo].[MARYSVILLE2HYATT_OH_UNION_PARCELS] o
+inner join MH_PROJECTS652_PARCELS p
+on p.shape.STPointOnSurface().STIntersects (o.shape) = 1
+group by p.gislink
+) as grouped
+on p.gislink = grouped.gislink
+
+
+----remove spaces
+select LTRIM(RTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE('	 26-3.2-06-000-000-017.00',CHAR(10),'[]'),CHAR(13),'[]'),char(9),'[]'),CHAR(32),'[]'),'][',''),'[]',CHAR(32)))) as result
