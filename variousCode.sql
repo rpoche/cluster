@@ -1173,3 +1173,13 @@ on p.gislink = grouped.gislink
 
 ----remove spaces
 select LTRIM(RTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE('	 26-3.2-06-000-000-017.00',CHAR(10),'[]'),CHAR(13),'[]'),char(9),'[]'),CHAR(32),'[]'),'][',''),'[]',CHAR(32)))) as result
+
+------convert dd coordinates to web mercator
+select --top 10
+[OBJECTID]
+,6378137.0 * RADIANS (shape.STX) as X_webMerc
+,6378137.00000000 * log((tan(0.7853981634 + 0.50000000 * radians (shape.STY))))as Y_webMerc
+, shape.STX as x2
+, shape.STY as y2
+--into temp02 
+from [GIS].[dbo].[STRUCT83]
