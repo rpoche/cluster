@@ -1183,3 +1183,17 @@ select --top 10
 , shape.STY as y2
 --into temp02 
 from [GIS].[dbo].[STRUCT83]
+
+-----FIND server name and info
+SELECT @@SERVERNAME;
+SELECT SERVERPROPERTY('MachineName')
+select HOST_NAME()
+
+SELECT dec.local_net_address
+FROM sys.dm_exec_connections AS dec
+WHERE dec.session_id = @@SPID;
+
+SELECT CONNECTIONPROPERTY('local_net_address') AS [IP]
+
+exec xp_cmdshell 'ipconfig'
+
