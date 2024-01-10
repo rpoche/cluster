@@ -696,6 +696,9 @@ from ____
 select [Shape].IsValid()
 from ____
 
+--ShapeSimple 
+shape.STIsSimple () = 0
+	
 --Label Point
 select shape.STPointOnSurface().ToString()
 from [test03].[dbo].[PARCELS]
